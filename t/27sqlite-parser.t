@@ -10,7 +10,7 @@ use SQL::Translator;
 use SQL::Translator::Schema::Constants;
 
 BEGIN {
-  maybe_plan(64, 'SQL::Translator::Parser::SQLite');
+  maybe_plan(66, 'SQL::Translator::Parser::SQLite');
 }
 SQL::Translator::Parser::SQLite->import('parse');
 
@@ -125,6 +125,11 @@ $file = "$Bin/data/sqlite/checks.sql";
   for my $t1 (@tables) {
     my @fields = $t1->get_fields;
     is(scalar @fields, 4, 'Four fields in "pet" table');
+
+    my @indices = $t1->get_indices;
+    is(scalar @indices, 1, 'one index created');
+    my ($index) = @indices;
+    diag explain [ map { "@{[$index->$_]}" } qw(fields name type) ];
 
     my $visits = $fields[3];
     is($visits->name,          'vet_visits', 'field name correct');

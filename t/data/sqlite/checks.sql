@@ -14,3 +14,5 @@ create table zoo_animal (
     constraint ck_json_array check(json_valid(vet_visits) and json_type(vet_visits) = 'array'),
     constraint pk_pet primary key (pet_id, person_id)
 );
+CREATE INDEX everything on zoo_animal (pet_id, person_id desc, name);
+CREATE INDEX pet_owner on pet (person_id);

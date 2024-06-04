@@ -490,7 +490,7 @@ conflict_algorigthm : /(rollback|abort|fail|ignore|replace)/i
 parens_field_list : '(' column_list ')'
     { $item[2] }
 
-column_list : field_name(s /,/)
+column_list : field_name(s /(?:,|(?^ui:DESC|ASC),)/)
 
 parens_value_list : '(' VALUE(s /,/) ')'
     { $item[2] }
